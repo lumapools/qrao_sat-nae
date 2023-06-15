@@ -27,11 +27,14 @@ This is done by using the [prototype-qrao](https://github.com/qiskit-community/p
 3. Calculate the NAE-SAT error and the consistency error based on the CNF and the variable assignments
 4. If the error is 0, we have a success and we know that the CNF is NAE-SAT.
 
+## Summary:
+- Goal: Compute the relaxed Max-Cut value (to determine if a CNF is NAE-SAT or not), or assign numbers in $\{0,1\}$ to $x$ (to find a solution that satisfies the CNF with the NAE constraint)
+- Input: Number of variables (integer), and a CNF (string)
+- Output: The relaxed Max-Cut value (`relaxed_maxcut_value = compute_max_cut_qrao(G, rounding_scheme, intermediate_results, should_round=False)`), or the variable assignments for $x$ (`x_values = compute_max_cut_qrao(G, rounding_scheme, intermediate_results, should_round=True)`)
+
 ## Example Execution 1 (determining if a CNF is NAE-SAT or not):
 1) Suppose we want to determine if $(x_1 \lor x_2 \lor \neg x_3) \land (x_3 \lor \neg x_1 \lor \neg x_6) \land (\neg x_2 \lor x_4 \lor x_5) \land (\neg x_4 \lor \neg x_5 \lor x_6)$ is SAT-NAE or not (it is).
-2) Run the cell containing `parsed_cnf, num_variables = parse_cnf()` with the inputs 
--`6` for the number of variables (as we have $\{x_1, x_2, x_3, x_4, x_5, x_6\}$ as variables for the CNF
--`0 1 n2,2 n0 n5,n1 3 4,n3 n4 5` for the CNF itself.
+2) Run the cell containing `parsed_cnf, num_variables = parse_cnf()` with the inputs: `6` for the number of variables (as we have $\{x_1, x_2, x_3, x_4, x_5, x_6\}$ as variables for the CNF, and `0 1 n2,2 n0 n5,n1 3 4,n3 n4 5` for the CNF itself.
 3) Execute the cells that create/display the graph and compute the theoretical Max-Cut value
 4) Now we compute the relaxed Max-Cut value because we want to determine if the CNF is NAE-SAT or not
 5) Based on that result, by checking `relaxed_maxcut_value > theoretical_maxcut_value` we can see that the CNF is maybe NAE-SAT
